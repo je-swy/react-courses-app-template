@@ -11,38 +11,43 @@ interface CourseInfoProps {
 }
 
 const CourseInfo: React.FC<CourseInfoProps> = ({ course, onBackClick }) => {
+  if (!course) {
+    return null;
+  }
   const authorsNames = course.authors
     .map((authorId) => mockedAuthorsList.find((a) => a.id === authorId)?.name)
     .join(', ');
 
   return (
     <section className='course-info-container'>
-
       <h1>{course.title}</h1>
-
       <article className='course-info-content'>
         <section className='course-description'>
           <h3>{UI_TEXT.DESCRIPTION}</h3>
           <p>{course.description}</p>
         </section>
+
         <section className='course-meta'>
           <p>
             <strong>{UI_TEXT.ID}</strong> <span>{course.id}</span>
           </p>
           <p>
-            <strong>{UI_TEXT.DURATION}</strong> <span>{getCourseDuration(course.duration)}</span>
+            <strong>{UI_TEXT.DURATION}</strong>{' '}
+            <span>{getCourseDuration(course.duration)}</span>
           </p>
           <p>
-            <strong>{UI_TEXT.CREATED}</strong> <span>{formatCreationDate(course.creationDate)}</span>
+            <strong>{UI_TEXT.CREATED}</strong>{' '}
+            <span>{formatCreationDate(course.creationDate)}</span>
           </p>
           <p>
             <strong>{UI_TEXT.AUTHORS}</strong> <span>{authorsNames}</span>
           </p>
         </section>
       </article>
-      <section className='back-button-container'>
+
+      <article className='back-button-container'>
         <Button buttonText={BUTTON_TEXT.BACK_TO_COURSES} onClick={onBackClick} />
-      </section>
+      </article>
     </section>
   );
 };

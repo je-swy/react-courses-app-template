@@ -14,6 +14,10 @@ interface CourseCardProps {
 }
 
 const CourseCard: React.FC<CourseCardProps> = ({ course, onShowCourse }) => {
+  if (!course) {
+    return null;
+  }
+
   const authorsNames = course.authors
     .map((authorId) => {
       const author = mockedAuthorsList.find((a) => a.id === authorId);
@@ -28,14 +32,17 @@ return (
       </section>
 
       <section className='course-details'>
-        <p className='course-authors'>
-          <strong>{UI_TEXT.AUTHORS}</strong> {authorsNames}
+<p className='course-authors'>
+          <strong>{UI_TEXT.AUTHORS}</strong>
+          <span>{authorsNames}</span>
         </p>
         <p>
-          <strong>{UI_TEXT.DURATION}</strong> {getCourseDuration(course.duration)}
+          <strong>{UI_TEXT.DURATION}</strong> 
+          <span>{getCourseDuration(course.duration)}</span>
         </p>
         <p>
-          <strong>{UI_TEXT.CREATED}</strong> {formatCreationDate(course.creationDate)}
+          <strong>{UI_TEXT.CREATED}</strong>
+          <span> {formatCreationDate(course.creationDate)}</span>
         </p>
 
         <section className='course-buttons'>
