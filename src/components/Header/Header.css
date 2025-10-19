@@ -1,0 +1,29 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 3rem;
+
+  background-color: var(--white);
+  color: var(--primary-grey);
+
+  box-shadow: 0 4px 10px var(--header-box-shadow);
+
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.header .logo {
+  height: 40px;
+  width: auto;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-info span {
+  font-size: var(--font-size-base);
+}
