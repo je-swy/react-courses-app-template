@@ -10,7 +10,7 @@ interface CoursesProps {
 }
 
 // define Courses as a React Functional Component, which takes these props
-const Courses: React.FC<CoursesProps> = ({ coursesList, authorsList, onShowCourse }) => {
+const Courses: React.FC<CoursesProps> = ({ coursesList, onShowCourse }) => {
   return (
     <section className='courses-container'>
       {coursesList.length === 0 ? (
@@ -21,7 +21,6 @@ const Courses: React.FC<CoursesProps> = ({ coursesList, authorsList, onShowCours
             key={course.id}
             course={course}
             onShowCourse={onShowCourse}
-            authorsList={authorsList}
           />
         ))
       )}

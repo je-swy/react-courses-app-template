@@ -8,8 +8,8 @@ import { mockedCoursesList, mockedAuthorsList } from './constants';
 import EmptyCourseList from './components/EmptyCourseList/EmptyCourseList';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true); 
-  
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+
   const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
 
   const handleShowCourse = (courseId: string) => {
@@ -27,15 +27,14 @@ function App() {
   return (
     <div className='container'>
       <Header isLoggedIn={isLoggedIn} />
-      
+
       <main className='container-inner'>
-          {/*<EmptyCourseList />*/}
+        {/*<EmptyCourseList />*/}
 
         {selectedCourse ? (
           <CourseInfo
             course={selectedCourse}
             onBackClick={handleBackToCourses}
-            authorsList={mockedAuthorsList}
           />
         ) : (
           <Courses
