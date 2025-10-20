@@ -1,6 +1,7 @@
 // in this file we define the EmptyCourseList component
 
 import Button from '../../common/Button/Button';
+import './EmptyCourseList.css';
 
 import { BUTTON_TEXT, UI_TEXT } from '../../constants';
 

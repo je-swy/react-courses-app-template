@@ -7,7 +7,7 @@ export const BUTTON_TEXT = {
   SEARCH: 'Search',
   ADD_NEW: 'Add New Course',
   SHOW_COURSE: 'Show Course',
-  BACK_TO_COURSES: '< Back to courses',
+  BACK_TO_COURSES: 'Back',
   REGISTRATION: 'Registration'
 };
 
@@ -24,7 +24,7 @@ export const UI_TEXT = {
   EDIT_ALT: 'Edit course',
   DELETE_ALT: 'Delete course',
 
-  EMPTY_LIST_TITLE: 'Course List is Empty',
+  EMPTY_LIST_TITLE: 'Your List Is Empty',
   EMPTY_LIST_SUBTITLE: 'Please use "Add New Course" button to add your first course',
 };
 

@@ -5,6 +5,7 @@ import CourseInfo from './components/CourseInfo/CourseInfo';
 import './App.css';
 import './index.css';
 import { mockedCoursesList, mockedAuthorsList } from './constants';
+import EmptyCourseList from './components/EmptyCourseList/EmptyCourseList';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true); 
@@ -28,10 +29,13 @@ function App() {
       <Header isLoggedIn={isLoggedIn} />
       
       <main className='container-inner'>
+          {/*<EmptyCourseList />*/}
+
         {selectedCourse ? (
-          <CourseInfo 
-            course={selectedCourse} 
-            onBackClick={handleBackToCourses} 
+          <CourseInfo
+            course={selectedCourse}
+            onBackClick={handleBackToCourses}
+            authorsList={mockedAuthorsList}
           />
         ) : (
           <Courses
