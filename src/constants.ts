@@ -24,7 +24,7 @@ export const UI_TEXT = {
   EDIT_ALT: 'Edit course',
   DELETE_ALT: 'Delete course',
 
-  EMPTY_LIST_TITLE: 'Your List Is Empty',
+  EMPTY_LIST_TITLE: 'Course List is Empty',
   EMPTY_LIST_SUBTITLE: 'Please use "Add New Course" button to add your first course',
 };
 

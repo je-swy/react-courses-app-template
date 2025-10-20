@@ -1,4 +1,4 @@
-import { Course, mockedAuthorsList, BUTTON_TEXT, UI_TEXT } from '../../../../constants';
+import { Course, Author, BUTTON_TEXT, UI_TEXT } from '../../../../constants';
 import getCourseDuration from '../../../../helpers/getCourseDuration';
 import formatCreationDate from '../../../../helpers/formatCreationDate';
 import Button from '../../../../common/Button/Button';
@@ -10,6 +10,7 @@ import './CourseCard.css';
 
 interface CourseCardProps {
   course: Course;
+  authorsList?: Author[];
   onShowCourse: (courseId: string) => void;
 }
 
@@ -24,11 +25,12 @@ const DEFAULT_COURSE_CARD: Course = {
 
 const CourseCard: React.FC<CourseCardProps> = ({
   course = DEFAULT_COURSE_CARD,
+  authorsList = [],
   onShowCourse,
 }) => {
   const authorsNames = course.authors
     .map((authorId) => {
-      const author = mockedAuthorsList.find((a) => a.id === authorId);
+      const author = authorsList.find((a) => a.id === authorId);
       return author ? author.name : 'Unknown Author';
     })
     .join(', ');
