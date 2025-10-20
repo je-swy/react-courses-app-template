@@ -5,7 +5,6 @@
 .course-info-container h1 {
   font-size: 2rem; 
   font-weight: var(--font-weight-bold);
-  color: var(--courses-heading);
   margin-top: 0;
   margin-bottom: 2rem;
 }
@@ -30,7 +29,6 @@
 .course-description h3 {
   font-size: 1.25rem;
   font-weight: var(--font-weight-bold);
-  color: var(--courses-heading);
   margin-top: 0;
   margin-bottom: 1rem;
 }
@@ -62,7 +60,6 @@
 
 .course-meta p strong {
   font-weight: var(--font-weight-bold);
-  color: var(--courses-heading);
   flex-basis: 80px;
 }
 

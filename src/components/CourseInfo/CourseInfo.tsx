@@ -1,19 +1,28 @@
-import { Course, mockedAuthorsList } from '../../constants';
-import { getCourseDuration } from '../../helpers/getCourseDuration';
-import { formatCreationDate } from '../../helpers/formatCreationDate';
+import { Course, mockedAuthorsList, BUTTON_TEXT, UI_TEXT } from '../../constants';
+import getCourseDuration from '../../helpers/getCourseDuration';
+import formatCreationDate from '../../helpers/formatCreationDate';
 import Button from '../../common/Button/Button';
 import './CourseInfo.css';
-import { BUTTON_TEXT, UI_TEXT } from '../../constants';
 
 interface CourseInfoProps {
   course: Course;
   onBackClick: () => void;
 }
 
-const CourseInfo: React.FC<CourseInfoProps> = ({ course, onBackClick }) => {
-  if (!course) {
-    return null;
-  }
+// Default course info to use if no course is provided
+const DEFAULT_COURSE_INFO: Course = {
+  id: 'N/A',
+  title: 'Course 1',
+  description: 'Course 1 description',
+  authors: [], 
+  duration: 60,
+  creationDate: '01/01/2025',
+};
+
+const CourseInfo: React.FC<CourseInfoProps> = ({
+  course = DEFAULT_COURSE_INFO, 
+  onBackClick,
+}) => {
   const authorsNames = course.authors
     .map((authorId) => mockedAuthorsList.find((a) => a.id === authorId)?.name)
     .join(', ');
