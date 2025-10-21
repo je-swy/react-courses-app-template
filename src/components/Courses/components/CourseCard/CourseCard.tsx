@@ -29,14 +29,10 @@ const CourseCard: React.FC<CourseCardProps> = ({
   onShowCourse,
 }) => {
   let authorsNames = course.authors
-    .map((authorId) => {
-      const author = authorsList.find((a) => a.id === authorId);
-      return author ? author.name : 'Unknown Author';
-    })
-    .join(', ');
-  if (!authorsNames && course.authors.length === 0) {
-    authorsNames = 'name2, name3';
-  }
+    .map((authorId) => authorsList.find((a) => a.id === authorId)?.name)
+    .filter(Boolean)
+    .join(', ') || 'name2, name3';
+
   return (
     <article className='course-card'>
       <h2>{course.title}</h2>
