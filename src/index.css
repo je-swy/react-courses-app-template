@@ -1,0 +1,29 @@
+@import "normalize.css";
+
+:root {
+  --primary-blue: #007298;
+  --error-color: #dc3545;
+  --primary-grey: #333E48;
+  --white: #ffffff;
+  --light-grey: #CFCFCF;
+  --header-box-shadow: rgba(0, 0, 0, 0.15);
+  --background-light: #F7F7F7;
+  --courses-shadow: rgba(0, 0, 0, 0.25);
+  --courses-heading: #000000;
+
+  --font-primary: 'Open Sans', sans-serif;
+
+  --font-size-base: 16px; /* 1rem */
+  --font-size-small: 0.875rem; /* 14px */
+  --font-size-large: 1.25rem; /* 20px */
+
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+}
+
+
+body {
+  font-family: var(--font-primary);
+  background-color: var(--background-light);
+  color: var(--primary-grey);
+}

@@ -1,0 +1,16 @@
+.button {
+  background-color: var(--primary-blue);
+  color: var(--white);
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: var(--font-primary);
+  font-size: 0.9rem; 
+}
+
+.button:hover {
+  background-color: #005a7a; 
+}
