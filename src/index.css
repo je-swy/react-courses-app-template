@@ -10,12 +10,16 @@
   --background-light: #F7F7F7;
   --courses-shadow: rgba(0, 0, 0, 0.25);
   --courses-heading: #000000;
+  --btn-hover: #005a7a;
 
   --font-primary: 'Open Sans', sans-serif;
 
-  --font-size-base: 16px; /* 1rem */
-  --font-size-small: 0.875rem; /* 14px */
-  --font-size-large: 1.25rem; /* 20px */
+  --font-size-base: 16px;
+  /* 1rem */
+  --font-size-small: 0.875rem;
+  /* 14px */
+  --font-size-large: 1.25rem;
+  /* 20px */
 
   --font-weight-regular: 400;
   --font-weight-bold: 700;

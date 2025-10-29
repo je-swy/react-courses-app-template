@@ -1,4 +1,4 @@
-import { Course, mockedAuthorsList, BUTTON_TEXT, UI_TEXT } from '../../constants';
+import { Course, Author, BUTTON_TEXT, UI_TEXT } from '../../constants';
 import getCourseDuration from '../../helpers/getCourseDuration';
 import formatCreationDate from '../../helpers/formatCreationDate';
 import Button from '../../common/Button/Button';
@@ -6,6 +6,7 @@ import './CourseInfo.css';
 
 interface CourseInfoProps {
   course: Course;
+  authorsList?: Author[];
   onBackClick: () => void;
 }
 
@@ -21,11 +22,12 @@ const DEFAULT_COURSE_INFO: Course = {
 
 const CourseInfo: React.FC<CourseInfoProps> = ({
   course = DEFAULT_COURSE_INFO,
+  authorsList = [],
   onBackClick,
 }) => {
 
   let authorsNames = course.authors
-    .map((authorId) => mockedAuthorsList.find((a) => a.id === authorId)?.name)
+    .map((authorId) => authorsList.find((a) => a.id === authorId)?.name)
     .join(', ');
   if (!authorsNames) {
     authorsNames = 'name2, name3';

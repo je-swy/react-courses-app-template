@@ -8,9 +8,9 @@
   text-transform: uppercase;
   cursor: pointer;
   font-family: var(--font-primary);
-  font-size: 0.9rem; 
+  font-size: var(--font-primary); 
 }
 
 .button:hover {
-  background-color: #005a7a; 
+  background-color: var(--btn-hover); 
 }
