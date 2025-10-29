@@ -1,5 +1,4 @@
 import { useState, useMemo } from 'react';
-import { v4 as uuidv4 } from 'uuid'; 
 
 import styles from './CreateCourse.module.css';
 
@@ -80,7 +79,7 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ onCourseCreate, onCancel })
     // If validation passed create a new author object
     if (isValid) {
       const newAuthor: Author = {
-        id: uuidv4(), // Generate unique ID
+        id: crypto.randomUUID(), // Generate unique ID
         name: newAuthorName, // Assign the name from state
       };
       // Add the new author to the 'available' list
@@ -165,7 +164,7 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ onCourseCreate, onCancel })
     if (validateForm()) {
       // If valid, create the new course object
       const newCourse: Course = {
-        id: uuidv4(),
+        id: crypto.randomUUID(),
         title: title,
         description: description,
         creationDate: formatCurrentDate(),
