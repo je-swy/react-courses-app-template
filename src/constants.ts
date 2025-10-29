@@ -30,6 +30,7 @@ export const UI_TEXT = {
   DELETE_ALT: 'Delete course',
 
   REGISTRATION: 'Registration',
+  REGISTRATION_BTN: 'Register',
   REGISTRATION_SUCCESSFUL: 'Registration successful!',
 
   PLACEHOLDER_NAME: 'Enter your name',

@@ -1,5 +1,5 @@
 import styles from './AuthorItem.module.css';
-import { Author } from '../../../../constants';
+import { Author } from '../../constants';
 import trashIcon from '../../../../assets/images/trash.svg';
 import addIcon from '../../../../assets/images/add.svg';
 

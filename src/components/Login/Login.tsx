@@ -36,6 +36,22 @@ const Login: React.FC<LoginProps> = ({ onShowRegistration, onLoginSuccess }) => 
     }
   };
 
+  //email hanlder
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+    if (errors.email) {
+      setErrors((prevErrors) => ({ ...prevErrors, email: '' }));
+    }
+  };
+
+  // password handler
+  const handlePasswordChange = (value: string) => {
+    setPassword(value);
+    if (errors.password) {
+      setErrors((prevErrors) => ({ ...prevErrors, password: '' }));
+    }
+  };
+
   return (
     <div className={styles.pageContainer}>
       <h2 className={styles.title}>{UI_TEXT.LOGIN}</h2>
@@ -43,7 +59,7 @@ const Login: React.FC<LoginProps> = ({ onShowRegistration, onLoginSuccess }) => 
       <form className={styles.formContainer} onSubmit={handleSubmit}>
         <Input
           value={email}
-          onChange={setEmail}
+          onChange={handleEmailChange}
           labelText={UI_TEXT.LABEL_EMAIL}
           placeholderText={UI_TEXT.PLACEHOLDER_EMAIL}
           type='email'
@@ -51,7 +67,7 @@ const Login: React.FC<LoginProps> = ({ onShowRegistration, onLoginSuccess }) => 
         />
         <Input
           value={password}
-          onChange={setPassword}
+          onChange={handlePasswordChange}
           labelText={UI_TEXT.LABEL_PASSWORD}
           placeholderText={UI_TEXT.PLACEHOLDER_PASSWORD}
           type='password'

@@ -42,6 +42,27 @@ const Registration: React.FC<RegistrationProps> = ({ onShowLogin }) => {
     return isValid;
   };
 
+  const handleNameChange = (value: string) => {
+    setName(value);
+    if (errors.name) {
+      setErrors((prevErrors) => ({ ...prevErrors, name: '' }));
+    }
+  };
+
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+    if (errors.email) {
+      setErrors((prevErrors) => ({ ...prevErrors, email: '' }));
+    }
+  };
+
+  const handlePasswordChange = (value: string) => {
+    setPassword(value);
+    if (errors.password) {
+      setErrors((prevErrors) => ({ ...prevErrors, password: '' }));
+    }
+  };
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (validateForm()) {
@@ -58,14 +79,14 @@ const Registration: React.FC<RegistrationProps> = ({ onShowLogin }) => {
       <form className={styles.formContainer} onSubmit={handleSubmit}>
         <Input
           value={name}
-          onChange={setName}
+          onChange={handleNameChange}
           labelText={UI_TEXT.LABEL_NAME}
           placeholderText={UI_TEXT.PLACEHOLDER_NAME}
           error={errors.name}
         />
         <Input
           value={email}
-          onChange={setEmail}
+          onChange={handleEmailChange}
           labelText={UI_TEXT.LABEL_EMAIL}
           placeholderText={UI_TEXT.PLACEHOLDER_EMAIL}
           type='email'
@@ -73,14 +94,14 @@ const Registration: React.FC<RegistrationProps> = ({ onShowLogin }) => {
         />
         <Input
           value={password}
-          onChange={setPassword}
+          onChange={handlePasswordChange}
           labelText={UI_TEXT.LABEL_PASSWORD}
           placeholderText={UI_TEXT.PLACEHOLDER_PASSWORD}
           type='password'
           error={errors.password}
         />
 
-        <Button type='submit' buttonText={UI_TEXT.REGISTRATION} />
+        <Button type='submit' buttonText={UI_TEXT.REGISTRATION_BTN} />
 
         <div className={styles.footer}>
           <p>

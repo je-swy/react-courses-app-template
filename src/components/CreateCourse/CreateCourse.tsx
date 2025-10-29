@@ -7,7 +7,7 @@ import { Course, Author, mockedAuthorsList, UI_TEXT, ERROR_MESSAGES, BUTTON_TEXT
 
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
-import AuthorItem from './components/AuthorItem/AuthorItem';
+import AuthorItem from '../AuthorItem/AuthorItem';
 import getCourseDuration from '../../helpers/getCourseDuration';
 
 import { formatCurrentDate } from '../../helpers/formatCreationDate';
