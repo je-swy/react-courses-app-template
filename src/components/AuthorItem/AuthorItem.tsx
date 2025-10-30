@@ -29,7 +29,7 @@ const AuthorItem: React.FC<AuthorItemProps> = ({
       >
         <img src={iconSrc} className={styles.authorButton} alt={altText} />
         {variant === 'add' && 'Add author'}
-        {variant === 'delete' && 'Add author'}
+        {variant === 'delete' && 'Delete author'}
       </button>
     </div>
   );
