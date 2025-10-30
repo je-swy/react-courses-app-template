@@ -150,7 +150,7 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ onCourseCreate, onCancel })
 
     // Validate description presence
     if (!description) {
-      newErrors.description = ERROR_MESSAGES.IS_REQUIRED; isValid = false;
+      newErrors.description = ERROR_MESSAGES.DESCRIPTION_IS_REQIERED; isValid = false;
       // Validate description length
     } else if (description.length < 2) {
       newErrors.description = ERROR_MESSAGES.DESC_TOO_SHORT; isValid = false;
@@ -218,7 +218,7 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ onCourseCreate, onCancel })
               placeholder={UI_TEXT.PLACEHOLDER_DESCRIPTION}
             />
             {/* Conditionally render the description error message */}
-            {errors.description && <p className={styles.inputErrorMessage}>{UI_TEXT.LABEL_DESCRIPTION} {errors.description}</p>}
+            {errors.description && <p className={styles.inputErrorMessage}>{errors.description}</p>}
           </div>
         </section>
 

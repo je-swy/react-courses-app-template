@@ -15,7 +15,7 @@ const AuthorItem: React.FC<AuthorItemProps> = ({
   onClick,
 }) => {
   const iconSrc = variant === 'add' ? addIcon : trashIcon;
-  const altText = variant === 'add' ? `Add author ${author.name}` : `Delete author ${author.name}`;
+  const altText = variant === 'add' ? `Add author` : `Delete author`;
   
   return (
     <div className={styles.authorItem}>
