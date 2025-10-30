@@ -61,14 +61,10 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ onCourseCreate, onCancel })
   // Handler for the "Create Author" button
   const handleCreateAuthor = () => {
     let isValid = true; // Flag for validation
-    let authorError = ''; 
-    // Check if the new author name is empty
-    if (!newAuthorName) {
-      // Set "required" error
-      authorError = ERROR_MESSAGES.REQUIRED;
-      isValid = false;
-      // Check if the name is too short
-    } else if (newAuthorName.length < 2) {
+    let authorError = '';
+
+    // Combined check for empty or too short
+    if (newAuthorName.length < 2) {
       authorError = ERROR_MESSAGES.NAME_TOO_SHORT
       isValid = false;
     }
@@ -84,8 +80,7 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ onCourseCreate, onCancel })
       };
       // Add the new author to the 'available' list
       setAvailableAuthors((prev) => [...prev, newAuthor]); // Add to the available list
-      // Clear the new author input field
-      setNewAuthorName(''); // Clear input
+      setNewAuthorName('');
     }
   };
 
@@ -115,6 +110,27 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ onCourseCreate, onCancel })
     }
   };
 
+  const handleTitleChange = (value: string) => {
+    setTitle(value);
+    if (errors.title) {
+      setErrors((prev) => ({ ...prev, title: '' }));
+    }
+  };
+
+  const handleDescriptionChange = (value: string) => {
+    setDescription(value);
+    if (errors.description) {
+      setErrors((prev) => ({ ...prev, description: '' }));
+    }
+  };
+
+  const handleAuthorNameChange = (value: string) => {
+    setNewAuthorName(value);
+    if (errors.newAuthorName) {
+      setErrors((prev) => ({ ...prev, newAuthorName: '' }));
+    }
+  };
+
   // Main validation function for the entire form
   const validateForm = (): boolean => {
     // Initialize a new errors object
@@ -126,10 +142,10 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ onCourseCreate, onCancel })
 
     // Validate title presence
     if (!title) {
-      newErrors.title = ERROR_MESSAGES.REQUIRED; isValid = false;
+      newErrors.title = ERROR_MESSAGES.TITLE_IS_REQUIERED; isValid = false;
       // Validate title length
     } else if (title.length < 2) {
-      newErrors.title = ERROR_MESSAGES.TITLE_TOO_SHORT; isValid = false; 
+      newErrors.title = ERROR_MESSAGES.TITLE_TOO_SHORT; isValid = false;
     }
 
     // Validate description presence
@@ -137,19 +153,19 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ onCourseCreate, onCancel })
       newErrors.description = ERROR_MESSAGES.IS_REQUIRED; isValid = false;
       // Validate description length
     } else if (description.length < 2) {
-      newErrors.description = ERROR_MESSAGES.DESC_TOO_SHORT; isValid = false; 
+      newErrors.description = ERROR_MESSAGES.DESC_TOO_SHORT; isValid = false;
     }
 
     // Parse duration string to number for validation
     const durationNum = parseInt(duration, 10);
     // Validate duration is a positive number
     if (!duration || isNaN(durationNum) || durationNum <= 0) {
-      newErrors.duration = ERROR_MESSAGES.DURATION_INVALID; isValid = false; 
+      newErrors.duration = ERROR_MESSAGES.DURATION_INVALID; isValid = false;
     }
 
     // Validate that at least one author is selected
     if (courseAuthors.length === 0) {
-      newErrors.courseAuthors = ERROR_MESSAGES.AUTHORS_REQUIRED; isValid = false; 
+      newErrors.courseAuthors = ERROR_MESSAGES.AUTHORS_REQUIRED; isValid = false;
     }
 
     // Update the errors state with all new messages
@@ -188,7 +204,7 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ onCourseCreate, onCancel })
           <Input
             labelText={UI_TEXT.LABEL_TITLE}
             value={title}
-            onChange={setTitle}
+            onChange={handleTitleChange}
             placeholderText={UI_TEXT.PLACEHOLDER_TITLE}
             error={errors.title}
           />
@@ -198,7 +214,7 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ onCourseCreate, onCancel })
               id='course-description'
               className={`${styles.descriptionTextarea} ${errors.description ? styles.inputError : ''}`}
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={(e) => handleDescriptionChange(e.target.value)}
               placeholder={UI_TEXT.PLACEHOLDER_DESCRIPTION}
             />
             {/* Conditionally render the description error message */}
@@ -233,7 +249,7 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ onCourseCreate, onCancel })
                 <Input
                   labelText={UI_TEXT.LABEL_AUTHOR_NAME}
                   value={newAuthorName}
-                  onChange={setNewAuthorName}
+                  onChange={handleAuthorNameChange}
                   placeholderText={UI_TEXT.PLACEHOLDER_AUTHOR_NAME}
                   error={errors.newAuthorName}
                 />

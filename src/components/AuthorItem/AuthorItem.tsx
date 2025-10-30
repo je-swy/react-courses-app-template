@@ -22,6 +22,7 @@ const AuthorItem: React.FC<AuthorItemProps> = ({
       <span className={styles.authorName}>{author.name}</span>
       <button
         type="button"
+        role="button"
         className={styles.iconButton}
         onClick={() => onClick(author.id)}
         aria-label={altText}
