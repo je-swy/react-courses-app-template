@@ -16,7 +16,7 @@ const AuthorItem: React.FC<AuthorItemProps> = ({
 }) => {
   const iconSrc = variant === 'add' ? addIcon : trashIcon;
   const altText = variant === 'add' ? `Add author` : `Delete author`;
-  
+
   return (
     <div className={styles.authorItem}>
       <span className={styles.authorName}>{author.name}</span>
@@ -28,6 +28,8 @@ const AuthorItem: React.FC<AuthorItemProps> = ({
         aria-label={altText}
       >
         <img src={iconSrc} className={styles.authorButton} alt={altText} />
+        {variant === 'add' && 'Add author'}
+        {variant === 'delete' && 'Delete author'}
       </button>
     </div>
   );

@@ -75,7 +75,7 @@ export const ERROR_MESSAGES = {
   AUTHORS_IS_REQUIERED: 'Author name should be at least 2 characters',
   AUTHORS_REQUIRED: 'At least one author is required',
   DESC_TOO_SHORT: 'Description must be at least 2 characters',
-  DURATION_INVALID: 'Duration is required',
+  DURATION_INVALID: 'duration is required and should be greater than 0',
   NEW_AUTHOR_NAME_TOO_SHORT: 'Author name must be at least 2 characters',
   PASSWORD_TOO_SHORT: (minLength: number) => `Password must be at least ${minLength} characters`,
 };
