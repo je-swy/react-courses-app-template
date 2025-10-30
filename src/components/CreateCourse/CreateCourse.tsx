@@ -141,21 +141,17 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ onCourseCreate, onCancel })
     let isValid = true;
 
     // Validate title presence
-    if (!title) {
-      newErrors.title = ERROR_MESSAGES.TITLE_IS_REQUIERED; isValid = false;
-      // Validate title length
-    } else if (title.length < 2) {
-      newErrors.title = ERROR_MESSAGES.TITLE_TOO_SHORT; isValid = false;
+    if (title.length < 2) {
+      newErrors.title = ERROR_MESSAGES.TITLE_IS_REQUIERED;
+      isValid = false;
     }
 
     // Validate description presence
-    if (!description) {
-      newErrors.description = ERROR_MESSAGES.DESCRIPTION_IS_REQIERED; isValid = false;
-      // Validate description length
-    } else if (description.length < 2) {
-      newErrors.description = ERROR_MESSAGES.DESC_TOO_SHORT; isValid = false;
+    if (description.length < 2) {
+      newErrors.description = ERROR_MESSAGES.DESCRIPTION_IS_REQIERED;
+      isValid = false;
     }
-
+    
     // Parse duration string to number for validation
     const durationNum = parseInt(duration, 10);
     // Validate duration is a positive number
@@ -176,19 +172,32 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ onCourseCreate, onCancel })
 
   // Handler for the final "Create Course" button
   const handleCreateCourse = () => {
-    // Run validation first
     if (validateForm()) {
-      // If valid, create the new course object
       const newCourse: Course = {
         id: crypto.randomUUID(),
-        title: title,
-        description: description,
+        title,
+        description,
         creationDate: formatCurrentDate(),
         duration: parseInt(duration, 10),
         authors: courseAuthors.map((a) => a.id),
       };
-      // Call the prop function to pass the new course data up
+
       onCourseCreate(newCourse);
+
+      // clear form after submit
+      setTitle('');
+      setDescription('');
+      setDuration('');
+      setCourseAuthors([]);
+      setAvailableAuthors(mockedAuthorsList);
+      setNewAuthorName('');
+      setErrors({
+        title: '',
+        description: '',
+        duration: '',
+        newAuthorName: '',
+        courseAuthors: '',
+      });
     } else {
       console.log('Course creation validation failed');
     }
