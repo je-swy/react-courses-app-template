@@ -173,7 +173,9 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ onCourseCreate, onCancel })
 
   // Handler for the final "Create Course" button
   const handleCreateCourse = () => {
-    if (validateForm()) {
+    const isValid = validateForm();
+
+    if (isValid) {
       const newCourse: Course = {
         id: crypto.randomUUID(),
         title,
@@ -182,30 +184,24 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ onCourseCreate, onCancel })
         duration: parseInt(duration, 10),
         authors: courseAuthors.map((a) => a.id),
       };
-
       onCourseCreate(newCourse);
-
-      // clear form after submit
-      setTitle('');
-      setDescription('');
-      setDuration('');
-      setCourseAuthors([]);
-      setAvailableAuthors(mockedAuthorsList);
-      setNewAuthorName('');
-      setErrors({
-        title: '',
-        description: '',
-        duration: '',
-        newAuthorName: '',
-        courseAuthors: '',
-      });
-    } else {
-      console.log('Course creation validation failed');
-      setTitle('');
-      setDescription('');
-      setDuration('');
     }
+
+    setTitle('');
+    setDescription('');
+    setDuration('');
+    setCourseAuthors([]);
+    setAvailableAuthors(mockedAuthorsList);
+    setNewAuthorName('');
+    setErrors({
+      title: '',
+      description: '',
+      duration: '',
+      newAuthorName: '',
+      courseAuthors: '',
+    });
   };
+
 
   return (
     <div>

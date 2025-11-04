@@ -14,8 +14,9 @@ const AuthorItem: React.FC<AuthorItemProps> = ({
   variant,
   onClick,
 }) => {
-  const iconSrc = variant === 'add' ? addIcon : trashIcon;
-  const altText = variant === 'add' ? `Add author` : `Delete author`;
+  const isAdd = variant === 'add';
+  const iconSrc = isAdd ? addIcon : trashIcon;
+  const buttonText = isAdd ? 'Add author' : 'Delete author';
 
   return (
     <div className={styles.authorItem}>
@@ -25,9 +26,10 @@ const AuthorItem: React.FC<AuthorItemProps> = ({
         role="button"
         className={styles.iconButton}
         onClick={() => onClick(author.id)}
-        aria-label={altText}
+        aria-label={buttonText}
       >
-        <img src={iconSrc} className={styles.authorButton} alt={altText} />
+        {buttonText}
+        <img src={iconSrc} className={styles.authorButton} alt={buttonText} />
         {variant === 'add' && 'Add author'}
         {variant === 'delete' && 'Delete author'}
       </button>
