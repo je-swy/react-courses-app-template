@@ -151,17 +151,18 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ onCourseCreate, onCancel })
       newErrors.description = ERROR_MESSAGES.DESCRIPTION_IS_REQIERED;
       isValid = false;
     }
-    
     // Parse duration string to number for validation
     const durationNum = parseInt(duration, 10);
     // Validate duration is a positive number
     if (!duration || isNaN(durationNum) || durationNum <= 0) {
-      newErrors.duration = ERROR_MESSAGES.DURATION_INVALID; isValid = false;
+      newErrors.duration = ERROR_MESSAGES.DURATION_INVALID;
+      isValid = false;
     }
 
     // Validate that at least one author is selected
     if (courseAuthors.length === 0) {
-      newErrors.courseAuthors = ERROR_MESSAGES.AUTHORS_REQUIRED; isValid = false;
+      newErrors.courseAuthors = ERROR_MESSAGES.AUTHORS_REQUIRED;
+      isValid = false;
     }
 
     // Update the errors state with all new messages
@@ -200,6 +201,9 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ onCourseCreate, onCancel })
       });
     } else {
       console.log('Course creation validation failed');
+      setTitle('');
+      setDescription('');
+      setDuration('');
     }
   };
 
