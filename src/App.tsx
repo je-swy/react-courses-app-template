@@ -15,7 +15,7 @@ import './index.css';
 import { Course, Author, mockedCoursesList, mockedAuthorsList } from './constants';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
   const [courses, setCourses] = useState<Course[]>(mockedCoursesList);
   const [authors] = useState<Author[]>(mockedAuthorsList);
   const [user, setUserName] = useState('');

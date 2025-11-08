@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Course, Author, BUTTON_TEXT } from '../../constants';
+import { Course, Author, BUTTON_TEXT, mockedCoursesList } from '../../constants';
 
 import styles from './Courses.module.css';
 
@@ -20,7 +20,7 @@ interface CoursesProps {
 
 // define Courses as a React Functional Component, which takes these props
 const Courses: React.FC<CoursesProps> = ({
-  coursesList = [],
+  coursesList = mockedCoursesList,
   authorsList = [],
   // onShowCourse,
   // onAddNewCourseClick 

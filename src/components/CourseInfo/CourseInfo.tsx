@@ -77,7 +77,7 @@ const CourseInfo: React.FC<CourseInfoProps> = ({
       </article>
 
       <article className='back-button-container'>
-        <Link to='/courses' className='button'>
+        <Link to='/courses' className='button' data-testid="mock-link">
           {BUTTON_TEXT.BACK_TO_COURSES}
         </Link>
       </article>
