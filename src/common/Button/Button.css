@@ -9,6 +9,10 @@
   cursor: pointer;
   font-family: var(--font-primary);
   font-size: var(--font-primary); 
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .button:hover {

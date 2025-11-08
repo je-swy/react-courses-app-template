@@ -1,11 +1,12 @@
 import { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 
 import { Course, Author, BUTTON_TEXT } from '../../constants';
 
 import styles from './Courses.module.css';
 
 import SearchBar from './components/SearchBar/SearchBar';
-import Button from '../../common/Button/Button';
+// import Button from '../../common/Button/Button';
 import CourseCard from './components/CourseCard/CourseCard';
 import EmptyCourseList from '../EmptyCourseList/EmptyCourseList';
 
@@ -13,16 +14,17 @@ import EmptyCourseList from '../EmptyCourseList/EmptyCourseList';
 interface CoursesProps {
   coursesList: Course[];
   authorsList: Author[];
-  onShowCourse: (courseId: string) => void;
-  onAddNewCourseClick: () => void;
+  // onShowCourse: (courseId: string) => void;
+  // onAddNewCourseClick: () => void;
 }
 
 // define Courses as a React Functional Component, which takes these props
 const Courses: React.FC<CoursesProps> = ({
   coursesList,
   authorsList,
-  onShowCourse,
-  onAddNewCourseClick }) => {
+  // onShowCourse,
+  // onAddNewCourseClick 
+}) => {
 
   // state to hold the current search term
   const [searchTerm, setSearchTerm] = useState('');
@@ -50,12 +52,15 @@ const Courses: React.FC<CoursesProps> = ({
   return (
     <section className={styles.coursesContainer}>
       <article className={styles.panel}>
-         {/* pass handleSearch to Search component */}
+        {/* pass handleSearch to Search component */}
         <SearchBar onSearch={handleSearch} />
-        <Button
+        {/* <Button
           buttonText={BUTTON_TEXT.ADD_NEW}
           onClick={onAddNewCourseClick}
-        />
+        /> */}
+        <Link to="/courses/add" className={`button ${styles.courseAddButton}`}>
+          {BUTTON_TEXT.ADD_NEW}
+        </Link>
       </article>
       {filteredCourses.length === 0 ? (
         <EmptyCourseList /> // show empty component if no courses found
@@ -64,7 +69,7 @@ const Courses: React.FC<CoursesProps> = ({
           <CourseCard
             key={course.id}
             course={course}
-            onShowCourse={onShowCourse}
+            // onShowCourse={onShowCourse}
             authorsList={authorsList}
           />
         ))

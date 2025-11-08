@@ -28,10 +28,10 @@ const AuthorItem: React.FC<AuthorItemProps> = ({
         onClick={() => onClick(author.id)}
         aria-label={buttonText}
       >
-        {buttonText}
+        {/* {buttonText} */}
         <img src={iconSrc} className={styles.authorButton} alt={buttonText} />
-        {variant === 'add' && 'Add author'}
-        {variant === 'delete' && 'Delete author'}
+        {/* {variant === 'add' && 'Add author'}
+        {variant === 'delete' && 'Delete author'} */}
       </button>
     </div>
   );

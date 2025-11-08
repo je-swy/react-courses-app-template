@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 
 import styles from './CreateCourse.module.css';
 
@@ -16,11 +17,16 @@ interface CreateCourseProps {
   // Prop: A callback function to pass the new course up to the App component
   onCourseCreate: (newCourse: Course) => void; // Function to add the course in App
   // Prop: A callback function to navigate back
-  onCancel: () => void; // Function to go back to Courses view
+  // onCancel: () => void; // Function to go back to Courses view
 }
 
 // Define the CreateCourse functional component, destructuring props
-const CreateCourse: React.FC<CreateCourseProps> = ({ onCourseCreate, onCancel }) => {
+const CreateCourse: React.FC<CreateCourseProps> = ({
+  onCourseCreate,
+  // onCancel 
+}) => {
+  const navigate = useNavigate();
+
   const [title, setTitle] = useState(''); // State for the course title input and etc
   const [description, setDescription] = useState('');
   const [duration, setDuration] = useState('');
@@ -185,6 +191,7 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ onCourseCreate, onCancel })
         authors: courseAuthors.map((a) => a.id),
       };
       onCourseCreate(newCourse);
+      navigate('/courses'); // Navigate back to courses list after creation
     }
 
     setTitle('');
@@ -319,10 +326,14 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ onCourseCreate, onCancel })
 
       {/* Container for the form buttons create, cancel*/}
       <div className={styles.actionButtons}>
-        <Button
+        {/* Use Link component to navigate back to courses list */}
+        <Link to="/courses" className="button">
+          {BUTTON_TEXT.CANCEL}
+        </Link>
+        {/* <Button
           buttonText={BUTTON_TEXT.CANCEL}
           onClick={onCancel}
-        />
+        /> */}
         <Button
           buttonText={BUTTON_TEXT.CREATE_COURSE}
           onClick={handleCreateCourse}

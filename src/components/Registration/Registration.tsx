@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 
 import styles from './Auth.module.css';
 
@@ -9,17 +10,25 @@ import Button from '../../common/Button/Button';
 
 import { validateEmail, validatePassword } from '../../helpers/validation';
 
-interface RegistrationProps {
-  onShowLogin: () => void;
-}
+// interface RegistrationProps {
+//   onShowLogin: () => void;
+// }
 
-const Registration: React.FC<RegistrationProps> = ({ onShowLogin }) => {
+const Registration: React.FC = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({ name: '', email: '', password: '' });
 
+  // api error state
+  const [apiError, setApiError] = useState<string | null>(null);
+
+  // get the navigation function
+  const navigate = useNavigate();
+
   const validateForm = (): boolean => {
+    // reset API error on new validation
+    setApiError(null);
     const newErrors = { name: '', email: '', password: '' };
     let isValid = true;
 
@@ -63,12 +72,50 @@ const Registration: React.FC<RegistrationProps> = ({ onShowLogin }) => {
     }
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  // update handleSubmit to be asynchronous
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (validateForm()) {
-      alert(UI_TEXT.REGISTRATION_SUCCESSFUL);
-    } else {
-      console.log(ERROR_MESSAGES.VALIDATUON_ERROR);
+
+    // run client-side validation
+    if (!validateForm()) {
+      console.log('Client-side validation failed');
+      return; // stop if validation fails
+    }
+
+    // prepare data for the API request
+    const newUser = {
+      name,
+      password,
+      email,
+    };
+
+    // send request to the server
+    try {
+      const response = await fetch('http://localhost:4000/register', {
+        method: 'POST',
+        body: JSON.stringify(newUser),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const result = await response.json();
+
+      // handle server response
+      if (result.successful) {
+        navigate('/login');
+      } else {
+        // show server-side errors
+        if (result.errors && Array.isArray(result.errors)) {
+          setApiError(result.errors.join(', '));
+        } else {
+          setApiError('An unknown error occurred.');
+        }
+      }
+    } catch (error) {
+      // network or server error
+      console.error('Registration error:', error);
+      setApiError('Failed to connect to the server.');
     }
   };
 
@@ -103,19 +150,19 @@ const Registration: React.FC<RegistrationProps> = ({ onShowLogin }) => {
 
         <Button type='submit' buttonText={UI_TEXT.REGISTRATION_BTN} />
 
+        {/* show API error if it exists */}
+        {apiError && (
+          <p className={styles.apiError}>
+            {apiError}
+          </p>
+        )}
+
         <div className={styles.footer}>
           <p>
             Already have an account?{' '}
-            <a
-              href='#'
-              className={styles.footerLink} 
-              onClick={(e) => {
-                e.preventDefault();
-                onShowLogin();
-              }}
-            >
+            <Link to='/login' className={styles.footerLink}>
               Login
-            </a>
+            </Link>
           </p>
         </div>
       </form>

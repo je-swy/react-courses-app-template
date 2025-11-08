@@ -1,7 +1,10 @@
+import { Link } from 'react-router-dom';
+
 import { Course, Author, BUTTON_TEXT, UI_TEXT } from '../../../../constants';
 import getCourseDuration from '../../../../helpers/getCourseDuration';
 import formatCreationDate from '../../../../helpers/formatCreationDate';
-import Button from '../../../../common/Button/Button';
+
+// import Button from '../../../../common/Button/Button';
 
 import editIcon from '../../../../assets/images/Icon-Edit.svg';
 import deleteIcon from '../../../../assets/images/Icon-Trash.svg';
@@ -11,22 +14,23 @@ import './CourseCard.css';
 interface CourseCardProps {
   course: Course;
   authorsList?: Author[];
-  onShowCourse: (courseId: string) => void;
+  // onShowCourse: (courseId: string) => void;
 }
 
-const DEFAULT_COURSE_CARD: Course = {
-  id: 'N/A',
-  title: 'Course Title',
-  description: 'Course Description',
-  authors: [],
-  duration: 60,
-  creationDate: '01/01/2025',
-};
+// const DEFAULT_COURSE_CARD: Course = {
+//   id: 'N/A',
+//   title: 'Course Title',
+//   description: 'Course Description',
+//   authors: [],
+//   duration: 60,
+//   creationDate: '01/01/2025',
+// };
 
 const CourseCard: React.FC<CourseCardProps> = ({
-  course = DEFAULT_COURSE_CARD,
+  // course = DEFAULT_COURSE_CARD,
+  course,
   authorsList = [],
-  onShowCourse,
+  // onShowCourse,
 }) => {
   let authorsNames = course.authors
     .map((authorId) => authorsList.find((a) => a.id === authorId)?.name)
@@ -56,11 +60,16 @@ const CourseCard: React.FC<CourseCardProps> = ({
           </p>
 
           <section className='course-buttons'>
-            <Button
+            {/* <Button
               buttonText={BUTTON_TEXT.SHOW_COURSE}
               onClick={() => onShowCourse(course.id)}
-            />
-
+            /> */}
+            <Link
+              to={`/courses/${course.id}`}
+              className='button'
+            >
+              {BUTTON_TEXT.SHOW_COURSE}
+            </Link>
             <button className='icon-button button' onClick={() => alert('Edit clicked!')}>
               <img src={editIcon} alt={UI_TEXT.EDIT_ALT} />
             </button>

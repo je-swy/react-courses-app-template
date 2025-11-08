@@ -20,7 +20,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   // function to handle input change
   const handleInputChange = (value: string) => {
     setSearchText(value);
-    // If input is cleared, trigger search with empty string
     if (value.trim() === '') {
       onSearch('');
     }

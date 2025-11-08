@@ -1,96 +1,92 @@
 import { useState } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+
 import Header from './components/Header/Header';
 import Courses from './components/Courses/Courses';
 import CourseInfo from './components/CourseInfo/CourseInfo';
 import Login from './components/Login/Login';
 import Registration from './components/Registration/Registration';
 import CreateCourse from './components/CreateCourse/CreateCourse';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+
 import './App.css';
 import './index.css';
+
 import { Course, Author, mockedCoursesList, mockedAuthorsList } from './constants';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoginView, setIsLoginView] = useState(true);
-  const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
-  const [showCreateCourse, setShowCreateCourse] = useState(false);
-
-  // state for courses and authors
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
   const [courses, setCourses] = useState<Course[]>(mockedCoursesList);
-  const [authors, setAuthors] = useState<Author[]>(mockedAuthorsList);
-
-  // Handlers
-  const handleShowCourse = (courseId: string) => {
-    setShowCreateCourse(false);
-    setSelectedCourseId(courseId);
-  };
-
-  const handleBackToCourses = () => {
-    setSelectedCourseId(null);
-  };
-
-  const showLogin = () => setIsLoginView(true);
-  const showRegistration = () => setIsLoginView(false);
-
+  const [authors] = useState<Author[]>(mockedAuthorsList);
+  const [user, setUserName] = useState(localStorage.getItem('user') || '');
+  
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
-    setIsLoginView(true);
+    setUserName(localStorage.getItem('user') || '');
   };
 
-  // Handlers for Create Course
-  const handleShowCreateCourse = () => {
-    setSelectedCourseId(null);
-    setShowCreateCourse(true);
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUserName('');
   };
-
-  const handleCancelCreateCourse = () => {
-    setShowCreateCourse(false);
-  };
-
   const handleAddCourse = (newCourse: Course) => {
     setCourses((prevCourses) => [...prevCourses, newCourse]);
-    setShowCreateCourse(false);
   };
-
-  const selectedCourse = selectedCourseId
-    ? courses.find((course) => course.id === selectedCourseId)
-    : undefined;
-
   return (
-    <div className='container'>
-      <Header isLoggedIn={isLoggedIn} />
+    <BrowserRouter>
+      <div className='container'>
+        <Header isLoggedIn={isLoggedIn} user={user} onLogout={handleLogout} />
 
-      <main className='container-inner'>
-        {!isLoggedIn ? (
-          isLoginView ? (
-            <Login
-              onShowRegistration={showRegistration}
-              onLoginSuccess={handleLoginSuccess}
+        <main className='container-inner'>
+          <Routes>
+            <Route
+              path='/login'
+              element={
+                isLoggedIn ? <Navigate to="/courses" replace /> : <Login onLoginSuccess={handleLoginSuccess} />
+              }
             />
-          ) : (
-            <Registration onShowLogin={showLogin} />
-          )
-        ) : showCreateCourse ? (
-          <CreateCourse
-            onCourseCreate={handleAddCourse}
-            onCancel={handleCancelCreateCourse}
-          />
-        ) : selectedCourse ? (
-          <CourseInfo
-            course={selectedCourse}
-            onBackClick={handleBackToCourses}
-            authorsList={authors}
-          />
-        ) : (
-          <Courses
-            coursesList={courses}
-            authorsList={authors}
-            onShowCourse={handleShowCourse}
-            onAddNewCourseClick={handleShowCreateCourse}
-          />
-        )}
-      </main>
-    </div>
+            <Route
+              path='/registration'
+              element={
+                isLoggedIn ? <Navigate to="/courses" replace /> : <Registration />
+              } />
+            <Route path='/' element={<Navigate replace to='/courses' />} />
+
+            <Route
+              path='/courses'
+              element={
+                <PrivateRoute>
+                  <Courses
+                    coursesList={courses}
+                    authorsList={authors}
+                  />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path='/courses/add'
+              element={
+                <PrivateRoute>
+                  <CreateCourse onCourseCreate={handleAddCourse} />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path='/courses/:courseId'
+              element={
+                <PrivateRoute>
+                  <CourseInfo coursesList={courses} authorsList={authors} />
+                </PrivateRoute>}
+            />
+
+            <Route path='*' element={<h2>404: Page is not found</h2>} />
+
+          </Routes>
+        </main>
+      </div>
+    </BrowserRouter>
   );
 }
 

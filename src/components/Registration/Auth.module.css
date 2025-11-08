@@ -45,3 +45,7 @@
   text-decoration: underline;
 }
 
+.apiError {
+  color: var(--error-color);
+  margin: 0;
+}
