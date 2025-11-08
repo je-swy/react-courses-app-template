@@ -20,8 +20,8 @@ interface CoursesProps {
 
 // define Courses as a React Functional Component, which takes these props
 const Courses: React.FC<CoursesProps> = ({
-  coursesList,
-  authorsList,
+  coursesList = [],
+  authorsList = [],
   // onShowCourse,
   // onAddNewCourseClick 
 }) => {

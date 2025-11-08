@@ -85,8 +85,8 @@ const Registration: React.FC = () => {
     // prepare data for the API request
     const newUser = {
       name,
-      password,
       email,
+      password,
     };
 
     // send request to the server
@@ -152,7 +152,7 @@ const Registration: React.FC = () => {
 
         {/* show API error if it exists */}
         {apiError && (
-          <p className={styles.apiError}>
+          <p className={ styles.apiError }>
             {apiError}
           </p>
         )}

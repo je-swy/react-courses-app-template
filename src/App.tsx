@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import Header from './components/Header/Header';
@@ -15,11 +15,21 @@ import './index.css';
 import { Course, Author, mockedCoursesList, mockedAuthorsList } from './constants';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [courses, setCourses] = useState<Course[]>(mockedCoursesList);
   const [authors] = useState<Author[]>(mockedAuthorsList);
-  const [user, setUserName] = useState(localStorage.getItem('user') || '');
-  
+  const [user, setUserName] = useState('');
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const storedUser = localStorage.getItem('user');
+
+    if (token && storedUser) {
+      setIsLoggedIn(true);
+      setUserName(storedUser);
+    }
+  }, []);
+
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
     setUserName(localStorage.getItem('user') || '');
@@ -29,9 +39,11 @@ function App() {
     setIsLoggedIn(false);
     setUserName('');
   };
+
   const handleAddCourse = (newCourse: Course) => {
     setCourses((prevCourses) => [...prevCourses, newCourse]);
   };
+  
   return (
     <BrowserRouter>
       <div className='container'>

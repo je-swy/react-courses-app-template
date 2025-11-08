@@ -5,7 +5,7 @@ export const BUTTON_TEXT = {
   LOGOUT: 'Logout',
   LOGIN: 'Login',
   SEARCH: 'Search',
-  ADD_NEW: 'Add New Course',
+  ADD_NEW: 'Create Course',
   SHOW_COURSE: 'Show Course',
   BACK_TO_COURSES: 'Back',
   REGISTRATION: 'Registration',

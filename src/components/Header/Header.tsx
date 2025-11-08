@@ -44,14 +44,13 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn, onLogout, user }) => {
             {/* if we are logged in (isLoggedIn is true) */}
             {isLoggedIn ? (
               <>
-                <span>{user}</span>
+                {user && <span>{user}</span>}
                 <Button
                   buttonText={BUTTON_TEXT.LOGOUT}
-                  onClick={handleLogout} // Додаємо обробник
+                  onClick={handleLogout}
                 />
               </>
             ) : (
-              // if we are not logged in: show a Link to /login
               <Link to="/login" className="button">
                 {BUTTON_TEXT.LOGIN}
               </Link>

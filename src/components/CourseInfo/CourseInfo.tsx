@@ -28,7 +28,7 @@ interface CourseInfoProps {
 const CourseInfo: React.FC<CourseInfoProps> = ({
   // course = DEFAULT_COURSE_INFO,
   authorsList = [],
-  coursesList,
+  coursesList = [],
   // onBackClick,
 }) => {
   // get the 'courseId' from the URL parameters

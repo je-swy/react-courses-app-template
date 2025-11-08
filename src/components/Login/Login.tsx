@@ -44,8 +44,8 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
 
     // prepare data for the API request
     const userCredentials = {
-      email,
       password,
+      email,
     };
 
     // send request to the server
