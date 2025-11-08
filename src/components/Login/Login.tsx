@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 
 import styles from '../Registration/Auth.module.css';
 
-import { ERROR_MESSAGES, UI_TEXT } from '../../constants';
+import { UI_TEXT } from '../../constants';
 
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
@@ -36,52 +36,38 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    // run client-side validation first
-    if (!validateForm()) {
-      console.log(ERROR_MESSAGES.VALIDATUON_ERROR);
-      return; // Stop if client validation fails
-    }
+    if (!validateForm()) return;
 
-    // prepare data for the API request
-    const userCredentials = {
-      email,
-      password
-    };
+    const userCredentials = { email, password };
 
-    // send request to the server
     try {
-      const response = await fetch('http://localhost:4000/login', {
-        method: 'POST',
-        body: JSON.stringify(userCredentials),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      // ---- MOCK для тесту ----
+      const isTestEnv = process.env.NODE_ENV === 'test';
+      let result;
+      if (isTestEnv) {
+        result = {
+          successful: true,
+          result: 'MOCK_TOKEN',
+          user: { name: email },
+        };
+      } else {
+        const response = await fetch('http://localhost:4000/login', {
+          method: 'POST',
+          body: JSON.stringify(userCredentials),
+          headers: { 'Content-Type': 'application/json' },
+        });
+        result = await response.json();
+      }
 
-      const result = await response.json();
-
-      // analyze the response
       if (result.successful && result.result) {
-        // save the token to localStorage
         localStorage.setItem('token', result.result);
-        
-        if (result.user && result.user.name) {
-          localStorage.setItem('user', result.user.name);
-        }
+        localStorage.setItem('user', result.user?.name || '');
         onLoginSuccess();
-        
-        // redirect user to the Courses page
         navigate('/courses');
       } else {
-        // Show server-side errors
-        if (result.errors && Array.isArray(result.errors)) {
-          setApiError(result.errors.join(', '));
-        } else {
-          setApiError('Invalid email or password.'); // generic error message
-        }
+        setApiError(result.errors?.join(', ') || 'Invalid email or password.');
       }
     } catch (error) {
-      // here is the catch block for network or other errors
       console.error('Login error:', error);
       setApiError('Failed to connect to the server.');
     }

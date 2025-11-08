@@ -5,53 +5,55 @@ import { BUTTON_TEXT } from '../../constants';
 
 import './Header.css';
 
-// describe the props that Header expects to receive from App
+// Props that Header expects from App
 interface HeaderProps {
-  isLoggedIn: boolean;
-  onLogout: () => void;
-  user: string;
+  isLoggedIn: boolean; // indicates if the user is logged in
+  onLogout: () => void; // function to update app state on logout
+  user: string; // username (can be empty)
 }
 
-// define Header as a React Functional Component, which takes these props 
 const Header: React.FC<HeaderProps> = ({ isLoggedIn, onLogout, user }) => {
-  // get navigate function and location object from react-router
-  const navigate = useNavigate();
-  const location = useLocation();
+  const navigate = useNavigate(); // react-router function for navigation
+  const location = useLocation(); // current URL location
 
-  // function to handle logout button click
+  // Function called when user clicks "Logout"
   const handleLogout = () => {
     localStorage.removeItem('token'); // remove token from localStorage
-    localStorage.removeItem('user'); // remove user from localStorage
-    onLogout(); // call onLogout prop to update app state
-    navigate('/login'); // navigate to login page after logout
-  }
+    localStorage.removeItem('user'); // remove username from localStorage
+    onLogout(); // update parent state
+    navigate('/login'); // redirect to login page
+  };
 
-  // get the current path for potential use 
   const currentPath = location.pathname;
-  // paths where auth controls should be hidden
-  const hideOnPaths = ['/login', '/registration'];
-  // determine if auth controls should be shown based on current path
+  const hideOnPaths = ['/login', '/registration']; // pages where auth controls should be hidden
   const showAuthControls = !hideOnPaths.includes(currentPath);
 
   return (
-    <header className='header'>
+    <header className="header">
       <Logo />
-      <article className='user-info'>
-        {/* check if we are on a page where controls should be shown 
-            (not /login and not /registration) */}
+
+      <article className="user-info">
         {showAuthControls && (
           <>
-            {/* if we are logged in (isLoggedIn is true) */}
             {isLoggedIn ? (
               <>
-                {user && <span>{user}</span>}
+                {/* Show username only if it exists */}
+                {user && <span data-testid="username">{user}</span>}
+
+                {/* Logout button */}
                 <Button
                   buttonText={BUTTON_TEXT.LOGOUT}
                   onClick={handleLogout}
+                  data-testid="logout-button" // for tests to find the logout button
                 />
               </>
             ) : (
-              <Link to="/login" className="button">
+              // Login link when not logged in
+              <Link
+                to="/login"
+                className="button"
+                data-testid="login-link" // for tests to find login
+              >
                 {BUTTON_TEXT.LOGIN}
               </Link>
             )}
