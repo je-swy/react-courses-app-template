@@ -41,22 +41,13 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
     const user = { email, password };
 
     try {
-      const isTestEnv = process.env.NODE_ENV === 'test';
       let result;
-      if (isTestEnv) {
-        result = {
-          successful: true,
-          result: 'MOCK_TOKEN',
-          user: { name: email },
-        };
-      } else {
-        const response = await fetch('http://localhost:4000/login', {
-          method: 'POST',
-          body: JSON.stringify(user),
-          headers: { 'Content-Type': 'application/json' },
-        });
-        result = await response.json();
-      }
+      const response = await fetch('http://localhost:4000/login', {
+        method: 'POST',
+        body: JSON.stringify(user),
+        headers: { 'Content-Type': 'application/json' },
+      });
+      result = await response.json();
 
       if (result.successful && result.result) {
         localStorage.setItem('token', result.result);
