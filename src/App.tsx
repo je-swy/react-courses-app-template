@@ -24,9 +24,11 @@ function App() {
     const token = localStorage.getItem('token');
     const storedUser = localStorage.getItem('user');
 
-    if (token && storedUser) {
+    if (token) {
       setIsLoggedIn(true);
-      setUserName(storedUser);
+      if (storedUser) {
+        setUserName(storedUser);
+      }
     }
   }, []);
 
@@ -43,7 +45,7 @@ function App() {
   const handleAddCourse = (newCourse: Course) => {
     setCourses((prevCourses) => [...prevCourses, newCourse]);
   };
-  
+
   return (
     <BrowserRouter>
       <div className='container'>

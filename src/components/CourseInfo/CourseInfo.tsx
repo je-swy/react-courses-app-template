@@ -1,6 +1,6 @@
 import { useParams, Link, Navigate } from 'react-router-dom';
 
-import { Course, Author, BUTTON_TEXT, UI_TEXT } from '../../constants';
+import { Course, Author, BUTTON_TEXT, UI_TEXT, mockedCoursesList } from '../../constants';
 import getCourseDuration from '../../helpers/getCourseDuration';
 import formatCreationDate from '../../helpers/formatCreationDate';
 // import Button from '../../common/Button/Button'; 
@@ -28,7 +28,7 @@ interface CourseInfoProps {
 const CourseInfo: React.FC<CourseInfoProps> = ({
   // course = DEFAULT_COURSE_INFO,
   authorsList = [],
-  coursesList = [],
+  coursesList = mockedCoursesList,
   // onBackClick,
 }) => {
   // get the 'courseId' from the URL parameters

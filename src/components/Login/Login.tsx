@@ -49,7 +49,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       });
       result = await response.json();
 
-      if (result.successful && result.result) {
+      if (result.result) {
         localStorage.setItem('token', result.result);
         localStorage.setItem('user', result.user?.name || '');
         onLoginSuccess();
