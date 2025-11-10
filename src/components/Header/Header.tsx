@@ -9,7 +9,7 @@ import './Header.css';
 interface HeaderProps {
   isLoggedIn: boolean; // indicates if the user is logged in
   onLogout: () => void; // function to update app state on logout
-  user: string; // username (can be empty)
+  user: string;
 }
 
 const Header: React.FC<HeaderProps> = ({ isLoggedIn, onLogout, user }) => {
@@ -38,13 +38,17 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn, onLogout, user }) => {
             {isLoggedIn ? (
               <>
                 {/* Show username only if it exists */}
-                {user && <span data-testid="username">{user}</span>}
+                {user ? (
+                  <span data-testid="username">{user}</span>
+                ) : (
+                  <span data-testid="username"></span>
+                )}
 
                 {/* Logout button */}
                 <Button
                   buttonText={BUTTON_TEXT.LOGOUT}
                   onClick={handleLogout}
-                  data-testid="logout-button" // for tests to find the logout button
+                  data-testid="logout-button"
                 />
               </>
             ) : (
@@ -52,7 +56,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn, onLogout, user }) => {
               <Link
                 to="/login"
                 className="button"
-                data-testid="login-link" // for tests to find login
+                data-testid="login-link"
               >
                 {BUTTON_TEXT.LOGIN}
               </Link>

@@ -38,10 +38,9 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
 
     if (!validateForm()) return;
 
-    const userCredentials = { email, password };
+    const user = { email, password };
 
     try {
-      // ---- MOCK для тесту ----
       const isTestEnv = process.env.NODE_ENV === 'test';
       let result;
       if (isTestEnv) {
@@ -53,7 +52,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       } else {
         const response = await fetch('http://localhost:4000/login', {
           method: 'POST',
-          body: JSON.stringify(userCredentials),
+          body: JSON.stringify(user),
           headers: { 'Content-Type': 'application/json' },
         });
         result = await response.json();
