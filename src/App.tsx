@@ -16,9 +16,9 @@ import { Course, Author, mockedCoursesList, mockedAuthorsList } from './constant
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
+  const [user, setUserName] = useState(localStorage.getItem('user') || '');
   const [courses, setCourses] = useState<Course[]>(mockedCoursesList);
   const [authors] = useState<Author[]>(mockedAuthorsList);
-  const [user, setUserName] = useState('');
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -26,9 +26,10 @@ function App() {
 
     if (token) {
       setIsLoggedIn(true);
-      if (storedUser) {
-        setUserName(storedUser);
-      }
+      setUserName(storedUser || '');
+    } else {
+      setIsLoggedIn(false);
+      setUserName('');
     }
   }, []);
 
