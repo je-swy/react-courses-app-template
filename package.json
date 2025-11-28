@@ -13,8 +13,11 @@
     "test:xunit": "jest"
   },
   "dependencies": {
+    "normalize.css": "^8.0.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^7.9.5",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.4",
@@ -27,6 +30,7 @@
     "@types/jest": "^29.5.12",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
+    "@types/uuid": "^10.0.0",
     "@typescript-eslint/parser": "^7.2.0",
     "@vitejs/plugin-react": "^4.2.1",
     "hex-rgb": "^5.0.0",

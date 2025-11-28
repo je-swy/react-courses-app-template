@@ -1,0 +1,15 @@
+.coursesContainer {
+  padding: 2rem 1rem;
+}
+
+.panel {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.panel > div:first-child {
+  flex-grow: 1;
+  max-width: 60%;
+}
