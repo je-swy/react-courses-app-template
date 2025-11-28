@@ -1,8 +1,10 @@
 import { useId } from 'react';
+
 import styles from './Input.module.css';
+
 import { ERROR_MESSAGES } from '../../constants';
 
-interface InputProps {
+type InputProps = {
   value: string;
   onChange: (newValue: string) => void;
   labelText: string;
@@ -10,9 +12,9 @@ interface InputProps {
   type?: string;
   className?: string; // for external container styling
   error?: string;
-}
+};
 
-const Input: React.FC<InputProps> = ({
+const Input = ({
   value,
   onChange,
   labelText,
@@ -20,7 +22,7 @@ const Input: React.FC<InputProps> = ({
   type = 'text',
   className = '', // this class will be applied to the outer container
   error,
-}) => {
+}: InputProps) => {
   const inputId = useId();
 
   return (

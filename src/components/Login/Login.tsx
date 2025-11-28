@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { login } from '../../store/user/userSlice'; 
 
 import styles from '../Registration/Auth.module.css';
 
@@ -10,18 +12,16 @@ import Button from '../../common/Button/Button';
 
 import { validateEmail, validatePassword } from '../../helpers/validation';
 
-interface LoginProps {
-  onLoginSuccess: () => void;
-}
-
-const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({ email: '', password: '' });
   // add state for API errors
   const [apiError, setApiError] = useState<string | null>(null);
 
+  // get navigation and dispatch functions
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const validateForm = (): boolean => {
     // reset API error on new validation
@@ -38,26 +38,34 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
 
     if (!validateForm()) return;
 
-    const user = { email, password };
+    const userCredentials = { password, email }; 
 
     try {
-      let result;
       const response = await fetch('http://localhost:4000/login', {
         method: 'POST',
-        body: JSON.stringify(user),
+        body: JSON.stringify(userCredentials),
         headers: { 'Content-Type': 'application/json' },
       });
-      result = await response.json();
 
-      if (result.result) {
-        localStorage.setItem('token', result.result);
-        localStorage.setItem('user', result.user?.name || '');
-        onLoginSuccess();
+      const result = await response.json();
+
+      if (result.successful && result.result) {
+        
+        dispatch(
+          login({
+            name: result.user?.name || '',
+            email: email, 
+            token: result.result,
+          })
+        );
+        
         navigate('/courses');
       } else {
+        // Failure: show server-side errors
         setApiError(result.errors?.join(', ') || 'Invalid email or password.');
       }
     } catch (error) {
+      // Network or server connection error
       console.error('Login error:', error);
       setApiError('Failed to connect to the server.');
     }

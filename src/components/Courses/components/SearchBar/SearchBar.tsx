@@ -1,14 +1,17 @@
 import { useState } from 'react';
+
 import styles from './SearchBar.module.css';
+
 import Button from '../../../../common/Button/Button';
 import Input from '../../../../common/Input/Input';
+
 import { BUTTON_TEXT, UI_TEXT } from '../../../../constants'; 
 
-interface SearchBarProps {
-  onSearch: (searchTerm: string) => void; // function for searching courses
+type SearchBarProps = {
+  onSearch: (searchTerm: string) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+const SearchBar = ({ onSearch } : SearchBarProps) => {
   // state to hold the current search text
   const [searchText, setSearchText] = useState('');
 
