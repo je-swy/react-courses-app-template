@@ -21,8 +21,8 @@ export const UI_TEXT = {
 
   AUTHORS: 'Authors:',
   DURATION: 'Duration:',
-  CREATED: 'Created',
-  DESCRIPTION: 'Description',
+  CREATED: 'Created:',
+  DESCRIPTION: 'Description:',
   ID: 'ID',
   EDIT_ALT: 'Edit course',
   DELETE_ALT: 'Delete course',

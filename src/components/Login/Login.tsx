@@ -38,12 +38,10 @@ const Login = () => {
 
     if (!validateForm()) return;
 
-    const userCredentials = { password, email };
-
     try {
       const response = await fetch('http://localhost:4000/login', {
         method: 'POST',
-        body: JSON.stringify(userCredentials),
+        body: `{"email":"${email}","password":"${password}"}`,
         headers: { 'Content-Type': 'application/json' },
       });
 
