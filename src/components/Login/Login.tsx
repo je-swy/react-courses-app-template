@@ -38,7 +38,7 @@ const Login = () => {
 
     if (!validateForm()) return;
 
-    const userCredentials = { email, password };
+    const userCredentials = { password, email };
 
     try {
       const response = await fetch('http://localhost:4000/login', {

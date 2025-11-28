@@ -19,7 +19,7 @@ export const UI_TEXT = {
   USER_NAME: 'Harry Potter',
   SEARCH_PLACEHOLDER: 'Input text',
 
-  AUTHORS: 'Authors',
+  AUTHORS: 'Authors:',
   DURATION: 'Duration',
   CREATED: 'Created',
   DESCRIPTION: 'Description',
