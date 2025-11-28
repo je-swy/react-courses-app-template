@@ -20,7 +20,7 @@ export const UI_TEXT = {
   SEARCH_PLACEHOLDER: 'Input text',
 
   AUTHORS: 'Authors:',
-  DURATION: 'Duration',
+  DURATION: 'Duration:',
   CREATED: 'Created',
   DESCRIPTION: 'Description',
   ID: 'ID',
