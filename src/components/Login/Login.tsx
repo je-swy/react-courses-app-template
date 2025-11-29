@@ -41,35 +41,28 @@ const Login = () => {
     try {
       const response = await fetch('http://localhost:4000/login', {
         method: 'POST',
-        body: `{"email":"${email}","password":"${password}"}`,
+        body: JSON.stringify({ email, password }),
         headers: { 'Content-Type': 'application/json' },
       });
 
       const result = await response.json();
 
-      if (result.result) {
-        const token = result.token || result.result;
+      if (result.user && result.token) {
+        const userData = {
+          name: result.user.name,
+          email: result.user.email,
+          token: result.token,
+        };
 
-        if (token) {
-          dispatch(
-            login({
-              name: result.user?.name || '',
-              email,
-              token,
-            })
-          );
+        dispatch(login(userData));
 
-          navigate('/courses');
-          return;
-        }
+        localStorage.setItem('user', JSON.stringify(userData));
 
-        setApiError('Invalid server response.');
+        navigate('/courses');
       } else {
-        setApiError(result.errors?.join(', ') || 'Invalid email or password.');
+        setApiError('Invalid server response.');
       }
-
     } catch (error) {
-      // Network or server connection error
       console.error('Login error:', error);
       setApiError('Failed to connect to the server.');
     }

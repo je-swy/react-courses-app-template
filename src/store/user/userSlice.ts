@@ -38,6 +38,7 @@ export const userSlice = createSlice({
       localStorage.removeItem('token');
       localStorage.removeItem('name');
       localStorage.removeItem('email');
+      localStorage.removeItem('user');
     },
   },
 });
