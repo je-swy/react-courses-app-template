@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { login } from '../../store/user/userSlice'; 
+import { login } from '../../store/user/userSlice';
 
 import styles from '../Registration/Auth.module.css';
 
@@ -48,15 +48,16 @@ const Login = () => {
       const result = await response.json();
 
       if (result.successful && result.result) {
-        
+
         dispatch(
           login({
             name: result.user?.name || '',
-            email: email, 
-            token: result.result,
+            email: email,
+            token: result.token,
           })
         );
-        
+
+
         navigate('/courses');
       } else {
         // Failure: show server-side errors
