@@ -47,8 +47,8 @@ const Login = () => {
 
       const result = await response.json();
 
-      if (result.successful || result.result) {
-
+      if (result.successful && result.result) {
+        
         dispatch(
           login({
             user: result.user?.name || '',
