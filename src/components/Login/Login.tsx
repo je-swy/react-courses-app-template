@@ -47,23 +47,29 @@ const Login = () => {
 
       const result = await response.json();
 
-      if (result.successful && result.result) {
-        
-        dispatch(
-          login({
-            user: result.user?.name || '',
-            email: email,
-            token: result.result,
-          })
-        );
+      if (result.result) {
+        const token = result.token || result.result;
 
-        navigate('/courses');
+        if (token) {
+          dispatch(
+            login({
+              name: result.user?.name || '',
+              email,
+              token,
+            })
+          );
+
+          navigate('/courses');
+          return;
+        }
+
+        setApiError('Invalid server response.');
       } else {
         setApiError(result.errors?.join(', ') || 'Invalid email or password.');
       }
-    }
-    // Network or server connection error
-    catch (error) {
+
+    } catch (error) {
+      // Network or server connection error
       console.error('Login error:', error);
       setApiError('Failed to connect to the server.');
     }
