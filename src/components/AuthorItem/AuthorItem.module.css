@@ -1,0 +1,29 @@
+.authorItem {
+  display: flex;
+  padding-top: 8px;
+  align-items: center;
+  width: 100%
+}
+
+.authorName {
+  font-size: var(--font-size-base);
+  color: var(--primary-grey);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: 1rem;
+}
+
+.iconButton {
+  font-size: var(--font-size-small);
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: 0.3s;
+  padding: 4px;
+} 
+
+.iconButton:hover{
+  background-color: var(--light-grey);
+}
