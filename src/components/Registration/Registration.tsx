@@ -91,7 +91,7 @@ const Registration: React.FC = () => {
 
     // send request to the server
     try {
-      const response = await fetch('http://localhost:4000/register', {
+      const response = await fetch('https://696020a1e7aa517cb7956472.mockapi.io/users', {
         method: 'POST',
         body: JSON.stringify(newUser),
         headers: {

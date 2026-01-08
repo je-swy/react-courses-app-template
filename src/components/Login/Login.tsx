@@ -42,7 +42,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
 
     try {
       let result;
-      const response = await fetch('http://localhost:4000/login', {
+      const response = await fetch('https://696020a1e7aa517cb7956472.mockapi.io/users', {
         method: 'POST',
         body: JSON.stringify(user),
         headers: { 'Content-Type': 'application/json' },
