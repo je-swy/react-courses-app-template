@@ -38,24 +38,22 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
 
     if (!validateForm()) return;
 
-    const user = { email, password };
-
     try {
-      let result;
-      const response = await fetch('https://696020a1e7aa517cb7956472.mockapi.io/users', {
-        method: 'POST',
-        body: JSON.stringify(user),
-        headers: { 'Content-Type': 'application/json' },
-      });
-      result = await response.json();
+      const response = await fetch('https://696020a1e7aa517cb7956472.mockapi.io/users');
+      const users = await response.json();
 
-      if (result.result) {
-        localStorage.setItem('token', result.result);
-        localStorage.setItem('user', result.user?.name || '');
+      const foundUser = users.find(
+        (u: any) => u.email === email && u.password === password
+      );
+
+      if (foundUser) {
+        localStorage.setItem('token', 'fake-jwt-token-for-portfolio');
+        localStorage.setItem('user', foundUser.name || foundUser.email);
+        
         onLoginSuccess();
         navigate('/courses');
       } else {
-        setApiError(result.errors?.join(', ') || 'Invalid email or password.');
+        setApiError('Invalid email or password.');
       }
     } catch (error) {
       console.error('Login error:', error);
