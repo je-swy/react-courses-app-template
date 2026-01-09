@@ -81,13 +81,13 @@ const Registration = () => {
     // prepare data for the API request (Order fixed for test reliability)
     const newUser = {
       name,
-      email, // Placing email before password for test consistency (as agreed previously)
+      email,
       password,
     };
 
     // send request to the server
     try {
-      const response = await fetch('http://localhost:4000/register', {
+      const response = await fetch('https://696020a1e7aa517cb7956472.mockapi.io/users', {
         method: 'POST',
         body: JSON.stringify(newUser),
         headers: {
@@ -98,8 +98,7 @@ const Registration = () => {
       const result = await response.json();
 
       // handle server response
-      if (result.successful) {
-        // Successful registration: redirect to Login page
+      if (response.ok) {
         navigate('/login');
       } else {
         // show server-side errors

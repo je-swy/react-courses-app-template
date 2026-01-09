@@ -39,37 +39,42 @@ const Login = () => {
     if (!validateForm()) return;
 
     try {
-      const response = await fetch('http://localhost:4000/login', {
-        method: 'POST',
-        body: `{"email":"${email}","password":"${password}"}`,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      // get users from MockAPI
+      const response = await fetch('https://696020a1e7aa517cb7956472.mockapi.io/users');
+      
+      // check response status
+      if (!response.ok) {
+        throw new Error('Server error');
+      }
 
-      const result = await response.json();
+      const users = await response.json();
 
-      console.log('Response from server:', result);
+      // search for user with matching email and password
+      const foundUser = users.find(
+        (u: any) => u.email === email && u.password === password
+      );
 
-      if (result.successful && result.result && result.user) {
+      // if user found, dispatch login and navigate
+      if (foundUser) {
+        //  data for Redux store
         const userData = {
-          name: result.user.name,
-          email: result.user.email,
-          token: result.result,
+          name: foundUser.name,
+          email: foundUser.email,
+          token: 'fake-jwt-token-' + foundUser.id, // token generation simulation
         };
 
         dispatch(login(userData));
-        localStorage.setItem('user', JSON.stringify(userData));
+        
         navigate('/courses');
       } else {
-        setApiError(result.errors?.join(', ') || 'Invalid email or password.');
+        setApiError('Invalid email or password.');
       }
 
     } catch (error) {
-      // Network or server connection error
       console.error('Login error:', error);
       setApiError('Failed to connect to the server.');
     }
   };
-
   //email handler
   const handleEmailChange = (value: string) => {
     setEmail(value);

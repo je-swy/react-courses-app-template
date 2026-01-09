@@ -1,10 +1,10 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../store/hooks'; 
 
 import styles from './CreateCourse.module.css';
 
-import { addAuthor, getAuthors } from '../../store/authors/authorsSlice';
+import { addAuthor, getAuthors, fetchAuthors } from '../../store/authors/authorsSlice';
 import { addCourse } from '../../store/courses/coursesSlice';
 
 import { Course, Author, UI_TEXT, ERROR_MESSAGES, BUTTON_TEXT } from '../../constants';
@@ -20,6 +20,10 @@ const CreateCourse = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    dispatch(fetchAuthors());
+  }, [dispatch]);
+  
   const allAuthors = useAppSelector(getAuthors);
 
   const [title, setTitle] = useState('');
@@ -155,7 +159,7 @@ const CreateCourse = () => {
   };
 
   // Handler for the final "Create Course" button
-  const handleCreateCourse = () => {
+const handleCreateCourse = async () => {
     const isValid = validateForm();
 
     if (isValid) {
@@ -165,12 +169,29 @@ const CreateCourse = () => {
         description,
         creationDate: formatCurrentDate(),
         duration: parseInt(duration, 10),
-        authors: courseAuthors.map((a) => a.id),
+        // Using author names directly
+        authors: courseAuthors.map((a) => a.name), 
       };
       
-      // dispatch the action to add the new course
-      dispatch(addCourse(newCourse)); 
-      navigate('/courses'); 
+      try {
+
+        const response = await fetch('https://696020a1e7aa517cb7956472.mockapi.io/courses', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newCourse)
+        });
+
+        if (response.ok) {
+          // If the course is successfully saved on the server, update the Redux store
+          dispatch(addCourse(newCourse)); 
+          navigate('/courses'); 
+        }
+      } catch (error) {
+        console.error("Failed to save course:", error);
+        // Even if the server fails, update the local store for testing
+        dispatch(addCourse(newCourse));
+        navigate('/courses');
+      }
     }
   };
 
