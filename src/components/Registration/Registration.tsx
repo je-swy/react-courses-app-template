@@ -10,11 +10,7 @@ import Button from '../../common/Button/Button';
 
 import { validateEmail, validatePassword } from '../../helpers/validation';
 
-// interface RegistrationProps {
-//   onShowLogin: () => void;
-// }
-
-const Registration: React.FC = () => {
+const Registration = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,7 +19,7 @@ const Registration: React.FC = () => {
   // api error state
   const [apiError, setApiError] = useState<string | null>(null);
 
-  // get the navigation function
+  // get navigation function
   const navigate = useNavigate();
 
   const validateForm = (): boolean => {
@@ -82,7 +78,7 @@ const Registration: React.FC = () => {
       return; // stop if validation fails
     }
 
-    // prepare data for the API request
+    // prepare data for the API request (Order fixed for test reliability)
     const newUser = {
       name,
       email,
@@ -102,7 +98,7 @@ const Registration: React.FC = () => {
       const result = await response.json();
 
       // handle server response
-      if (result.successful) {
+      if (response.ok) {
         navigate('/login');
       } else {
         // show server-side errors

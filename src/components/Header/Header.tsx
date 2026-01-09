@@ -1,31 +1,31 @@
 import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { logout, getIsAuth, getUserName } from '../../store/user/userSlice';
+
 import Logo from './components/Logo/Logo';
 import Button from '../../common/Button/Button';
+
 import { BUTTON_TEXT } from '../../constants';
 
 import './Header.css';
 
-// Props that Header expects from App
-interface HeaderProps {
-  isLoggedIn: boolean; // indicates if the user is logged in
-  onLogout: () => void; // function to update app state on logout
-  user: string;
-}
+const Header = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
 
-const Header: React.FC<HeaderProps> = ({ isLoggedIn, onLogout, user }) => {
-  const navigate = useNavigate(); // react-router function for navigation
-  const location = useLocation(); // current URL location
+  const isLoggedIn = useSelector(getIsAuth);
+  const userName = useSelector(getUserName);
 
-  // Function called when user clicks "Logout"
   const handleLogout = () => {
-    localStorage.removeItem('token'); // remove token from localStorage
-    localStorage.removeItem('user'); // remove username from localStorage
-    onLogout(); // update parent state
-    navigate('/login'); // redirect to login page
+    dispatch(logout()); 
+    
+    navigate('/login'); 
   };
 
   const currentPath = location.pathname;
-  const hideOnPaths = ['/login', '/registration']; // pages where auth controls should be hidden
+  const hideOnPaths = ['/login', '/registration'];
   const showAuthControls = !hideOnPaths.includes(currentPath);
 
   return (
@@ -37,14 +37,12 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn, onLogout, user }) => {
           <>
             {isLoggedIn ? (
               <>
-                {/* Show username only if it exists */}
-                {user ? (
-                  <span data-testid="username">{user}</span>
+                {userName ? (
+                  <span data-testid="username">{userName}</span>
                 ) : (
                   <span data-testid="username"></span>
                 )}
 
-                {/* Logout button */}
                 <Button
                   buttonText={BUTTON_TEXT.LOGOUT}
                   onClick={handleLogout}

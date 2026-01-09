@@ -1,21 +1,21 @@
 import './Button.css';
 
-interface ButtonProps {
+type ButtonProps = {
   buttonText: string;
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
-  className?: string; 
-}
+  className?: string;
+};
 
-const Button: React.FC<ButtonProps> = ({
+const Button = ({
   buttonText,
   onClick,
   type = 'button',
   className = '',
-}) => {
+}: ButtonProps) => {
   return (
     <button
-      role = "button"
+      role="button"
       type={type}
       onClick={onClick}
       className={`button ${className}`}

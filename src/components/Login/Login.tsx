@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { login } from '../../store/user/userSlice';
 
 import styles from '../Registration/Auth.module.css';
 
@@ -10,18 +12,16 @@ import Button from '../../common/Button/Button';
 
 import { validateEmail, validatePassword } from '../../helpers/validation';
 
-interface LoginProps {
-  onLoginSuccess: () => void;
-}
-
-const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({ email: '', password: '' });
   // add state for API errors
   const [apiError, setApiError] = useState<string | null>(null);
 
+  // get navigation and dispatch functions
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const validateForm = (): boolean => {
     // reset API error on new validation
@@ -39,28 +39,42 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
     if (!validateForm()) return;
 
     try {
+      // get users from MockAPI
       const response = await fetch('https://696020a1e7aa517cb7956472.mockapi.io/users');
+      
+      // check response status
+      if (!response.ok) {
+        throw new Error('Server error');
+      }
+
       const users = await response.json();
 
+      // search for user with matching email and password
       const foundUser = users.find(
         (u: any) => u.email === email && u.password === password
       );
 
+      // if user found, dispatch login and navigate
       if (foundUser) {
-        localStorage.setItem('token', 'fake-jwt-token-for-portfolio');
-        localStorage.setItem('user', foundUser.name || foundUser.email);
+        //  data for Redux store
+        const userData = {
+          name: foundUser.name,
+          email: foundUser.email,
+          token: 'fake-jwt-token-' + foundUser.id, // token generation simulation
+        };
+
+        dispatch(login(userData));
         
-        onLoginSuccess();
         navigate('/courses');
       } else {
         setApiError('Invalid email or password.');
       }
+
     } catch (error) {
       console.error('Login error:', error);
       setApiError('Failed to connect to the server.');
     }
   };
-
   //email handler
   const handleEmailChange = (value: string) => {
     setEmail(value);

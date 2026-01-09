@@ -1,39 +1,40 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Course, Author, BUTTON_TEXT, mockedCoursesList, mockedAuthorsList } from '../../constants';
+import { useAppSelector, useAppDispatch } from '../../store/hooks'; 
+import { fetchCourses, getCourses } from '../../store/courses/coursesSlice';
+import { fetchAuthors } from '../../store/authors/authorsSlice';
+
+import { BUTTON_TEXT } from '../../constants';
 
 import styles from './Courses.module.css';
 
 import SearchBar from './components/SearchBar/SearchBar';
-// import Button from '../../common/Button/Button';
 import CourseCard from './components/CourseCard/CourseCard';
 import EmptyCourseList from '../EmptyCourseList/EmptyCourseList';
 
-// describe the props that Courses expects to receive from App
-interface CoursesProps {
-  coursesList: Course[];
-  authorsList: Author[];
-  // onShowCourse: (courseId: string) => void;
-  // onAddNewCourseClick: () => void;
-}
+const Courses = () => { 
+  const dispatch = useAppDispatch();
 
-// define Courses as a React Functional Component, which takes these props
-const Courses: React.FC<CoursesProps> = ({
-  coursesList = mockedCoursesList,
-  authorsList = mockedAuthorsList,
-  // onShowCourse,
-  // onAddNewCourseClick 
-}) => {
+  const coursesList = useAppSelector(getCourses);
 
   // state to hold the current search term
   const [searchTerm, setSearchTerm] = useState('');
 
+  useEffect(() => {
+    dispatch(fetchCourses()); 
+    dispatch(fetchAuthors());
+  }, [dispatch]); 
+
   const filteredCourses = useMemo(() => {
+    if (!coursesList || coursesList.length === 0) {
+      return [];
+    }
     // if search term is empty, return full list
     if (!searchTerm) {
       return coursesList;
     }
+    
     // otherwise, filter courses by title or id
     const lowerCaseSearchTerm = searchTerm.toLowerCase(); // case insensitive search
     // if course title or id includes the search term, include it in results
@@ -54,10 +55,7 @@ const Courses: React.FC<CoursesProps> = ({
       <article className={styles.panel}>
         {/* pass handleSearch to Search component */}
         <SearchBar onSearch={handleSearch} />
-        {/* <Button
-          buttonText={BUTTON_TEXT.ADD_NEW}
-          onClick={onAddNewCourseClick}
-        /> */}
+        {/* Link for Add New Course */}
         <Link to="/courses/add" className={`button ${styles.courseAddButton}`}>
           {BUTTON_TEXT.ADD_NEW}
         </Link>
@@ -69,8 +67,6 @@ const Courses: React.FC<CoursesProps> = ({
           <CourseCard
             key={course.id}
             course={course}
-            // onShowCourse={onShowCourse}
-            authorsList={authorsList}
           />
         ))
       )}
