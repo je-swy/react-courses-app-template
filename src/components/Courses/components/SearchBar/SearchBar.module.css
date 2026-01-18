@@ -2,13 +2,20 @@
   display: flex;
   gap: 1rem;
   width: 100%;
+  flex-wrap: wrap;
 }
 
-.searchBarContainer > div:first-child {
+.searchBarContainer>div:first-child {
   flex-grow: 1;
   margin-bottom: 0px;
 }
 
 .searchBarContainer label {
-    margin-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+@media (min-width: 768px) {
+  .searchBarContainer {
+    flex-wrap: nowrap;
+  }
 }

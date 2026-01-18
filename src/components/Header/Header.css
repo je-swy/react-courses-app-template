@@ -2,28 +2,51 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 3rem;
-
+  /* Базові відступи для мобілки */
+  padding: 1rem; 
   background-color: var(--white);
-  color: var(--primary-grey);
-
   box-shadow: 0 4px 10px var(--header-box-shadow);
-
   width: 100%;
   box-sizing: border-box;
 }
 
+/* На планшетах і десктопах збільшуємо паддінги */
+@media (min-width: 768px) {
+  .header {
+    padding: 1.5rem 3rem;
+  }
+}
+
 .header .logo {
-  height: 40px;
+  height: 30px; /* Трохи менше лого на мобілці */
   width: auto;
+}
+
+@media (min-width: 768px) {
+  .header .logo {
+    height: 40px;
+  }
 }
 
 .user-info {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 10px; /* Менший проміжок на мобільних */
 }
 
+/* Приховуємо ім'я на дуже маленьких екранах, залишаємо тільки кнопку Logout */
+/* Або обмежуємо ширину імені */
 .user-info span {
-  font-size: var(--font-size-base);
+  font-size: 14px;
+  max-width: 80px; /* Щоб ім'я не розтягувало хедер */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (min-width: 480px) {
+  .user-info span {
+    font-size: var(--font-size-base);
+    max-width: none; /* На десктопі показуємо повністю */
+  }
 }

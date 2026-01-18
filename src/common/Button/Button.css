@@ -3,18 +3,27 @@
   color: var(--white);
   border: none;
   border-radius: 4px;
-  padding: 10px 20px;
+  padding: 8px 16px;
+  font-size: 12px;
   font-weight: var(--font-weight-bold);
   text-transform: uppercase;
   cursor: pointer;
   font-family: var(--font-primary);
-  font-size: var(--font-primary); 
   text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .button {
+    padding: 10px 20px;
+    font-size: 16px;
+    width: auto;
+  }
 }
 
 .button:hover {
-  background-color: var(--btn-hover); 
+  background-color: var(--btn-hover);
 }
